@@ -1,0 +1,247 @@
+*{box-sizing:border-box}html,body{padding:0;margin:0}
+.iphone-screen{width:591px;height:1280px;position:relative;overflow:hidden;isolation:isolate;background:#b8dca6;color:#1c1c1e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;-webkit-font-smoothing:antialiased;user-select:none}
+.iphone-screen img{display:block}.screen-fit{width:591px;height:1280px;object-fit:fill}.fill{width:100%;height:100%;object-fit:cover}.contain{width:100%;height:100%;object-fit:contain}
+.chat-root{position:absolute;inset:0;overflow:hidden;background:#b8dba9}.wallpaper{position:absolute;inset:0;width:591px;height:1280px;object-fit:cover}
+.chat-header{position:absolute;inset:0 auto auto 0;width:591px;height:169px;z-index:6;pointer-events:none}.chat-input{position:absolute;left:0;bottom:0;width:591px;height:124px;z-index:6;pointer-events:none}
+.chat-viewport{position:absolute;left:0;top:169px;width:591px;height:986px;overflow:hidden;z-index:2}
+.chat-stream{position:absolute;bottom:0;left:0;right:0;display:flex;flex-direction:column;justify-content:flex-end;min-height:100%;gap:3px;padding:9px 12px 6px;}
+.chat-row{display:grid;min-height:0;flex:none}.chat-row-clip{min-height:0;overflow:hidden}.chat-row-content{display:flex;align-items:flex-start;padding:3px 0}.chat-row-content.to-right{justify-content:flex-end}.chat-row-content.to-center{justify-content:center}
+.date-label{background:#64a8719c;color:white;border-radius:26px;padding:5px 12px;font-size:17px;line-height:23px;text-shadow:0 1px 1px #0002}
+.bubble{position:relative;width:max-content;max-width:510px;min-width:100px;border-radius:18px 18px 18px 6px;background:#fff;padding:10px 15px 29px;box-shadow:0 1px 2px #35473424;white-space:normal}
+.bubble.wide{width:min(510px,100%)}.bubble.outgoing{background:#daf4cb;border-radius:18px 18px 6px 18px}
+.bubble-copy{font-size:25px;line-height:1.365;letter-spacing:-.3px;overflow-wrap:anywhere}.stamp{position:absolute;right:11px;bottom:4px;color:#919b91;font-size:15px;white-space:nowrap;line-height:18px}.outgoing .stamp{color:#5d9c64}
+.check-pair{color:#40a55a;margin-left:6px;letter-spacing:-7px;padding-right:7px}
+.photo-message{position:relative;width:400px;height:505px;overflow:hidden;border-radius:21px 21px 6px 21px;border:1px solid #f7f7f7a8;box-shadow:0 1px 3px #13282e30;background:#74827c}.photo-fit{width:100%;height:100%;object-fit:cover}.photo-time{position:absolute;bottom:7px;right:11px;font-size:16px;color:white;text-shadow:0 1px 7px #000,0 1px 3px #000}
+.file-message{width:362px;height:116px;position:relative;background:white;border-radius:16px 16px 16px 6px;padding:9px;display:flex;gap:13px;box-shadow:0 1px 2px #0003}.file-preview{width:107px;height:96px;flex:none;overflow:hidden;border-radius:8px}.file-meta{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:7px;padding-bottom:8px}.file-label{color:#1889ea;font-size:22px;max-width:211px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.file-length{color:#858585;font-size:18px}.feedback-buttons{display:flex;flex-direction:column;gap:4px;width:510px}.feedback-item{height:53px;background:white;display:flex;align-items:center;justify-content:center;border-radius:11px;font-size:22px;white-space:nowrap;box-shadow:0 1px 2px #0002}
+.processing-box{min-height:165px}.processing-bubble{min-height:155px}
+.touch-ripple{position:absolute;z-index:85;border:2px solid;border-radius:50%;pointer-events:none;background:#007aff14}
+
+/* Unified dynamic status bar. All underlying source images were cleaned above y=78px. */
+.ios-status-bar{position:absolute;left:0;top:0;width:591px;height:72px;z-index:100;pointer-events:none;color:#0b1517;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;font-weight:600}
+.ios-status-bar.dark{color:#fff}
+.ios-clock{position:absolute;top:22px;left:44px;font-size:25px;line-height:30px;letter-spacing:-.6px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.ios-return-pill{position:absolute;top:7px;left:225px;width:141px;height:36px;border-radius:18px;background:#148eff;box-shadow:0 1px 5px #0002;color:#fff;display:flex;align-items:center;justify-content:center;gap:7px;font-size:19px;line-height:35px;font-weight:560;letter-spacing:.15px}
+.ios-return-pill svg{width:23px;height:23px}
+.ios-signal{position:absolute;left:433px;top:25px;width:25px;height:22px;display:block}
+.ios-signal svg{width:25px;height:22px;fill:currentColor}
+.ios-network{position:absolute;left:467px;top:23px;font-size:20px;font-weight:600;letter-spacing:-.1px}
+.ios-battery{position:absolute;left:526px;top:26px;width:30px;height:19px;border-radius:5px;background:currentColor;display:flex;align-items:center;justify-content:center}
+.ios-battery:after{content:"";position:absolute;width:3px;height:9px;border-radius:1px;right:-4px;top:5px;background:currentColor}
+.ios-battery span{color:#121516;font-size:15px;font-weight:800;line-height:19px;letter-spacing:-.7px}
+.ios-status-bar.light .ios-battery{background:#28332e}.ios-status-bar.light .ios-battery span{color:#fff}
+.ios-status-bar.dark .ios-battery{background:#e7e8ea}.ios-status-bar.dark .ios-battery span{color:#202020}
+
+/* Modern Telegram iOS attachment sheet, aligned to 591x1280 reference image. */
+.gallery-overlay{position:absolute;inset:0;z-index:12;overflow:hidden;pointer-events:none}
+.gallery-overlay-dim{position:absolute;inset:0;background:#171b1d;will-change:opacity,backdrop-filter}
+.gallery-sheet{position:absolute;left:8px;bottom:0;width:575px;height:862px;overflow:hidden;border-radius:55px 55px 0 0;background:#f1f2f5;box-shadow:0 -9px 30px #0002}
+.gallery-grabber{position:absolute;top:6px;left:267px;width:41px;height:5px;background:#dedee1;border-radius:8px;z-index:7}
+.gallery-topbar{position:absolute;top:0;left:0;width:575px;height:100px;z-index:10;background:rgba(250,250,251,.80);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);display:flex;align-items:center;justify-content:center}
+.gallery-circle-btn{position:absolute;top:23px;width:65px;height:65px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;color:#111;font-size:43px;font-weight:300;line-height:1;box-shadow:0 1px 3px #0002}
+.gallery-circle-btn.close{left:20px}.gallery-circle-btn.more{right:20px;font-size:26px;letter-spacing:2px;font-weight:700}
+.gallery-selection-summary{position:absolute;left:107px;top:23px;min-width:73px;height:65px;border-radius:36px;background:#168ef6;color:#fff;display:flex;gap:4px;align-items:center;justify-content:center;font-size:25px;font-weight:600;box-shadow:0 1px 3px #0002}
+.gallery-selection-summary .summary-check{font-size:32px;font-weight:500}
+.gallery-top-title{font-size:25px;font-weight:640;letter-spacing:-.4px;display:flex;gap:12px;align-items:center;color:#171719}
+.gallery-top-title i{display:block;width:12px;height:12px;border-bottom:2px solid #999ba0;border-right:2px solid #999ba0;transform:rotate(45deg) translateY(-3px)}
+.gallery-photos-window{position:absolute;left:0;top:100px;width:575px;height:762px;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;background:#171719}
+.gallery-photos-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:190px;gap:2px;align-content:start;will-change:transform;background:#0b0b0b}
+.gallery-tile{position:relative;overflow:hidden;background:#303033;min-width:0;min-height:0}
+.gallery-photo{width:100%;height:100%;object-fit:cover;display:block}
+/* Native iOS is a single outlined ring; selected state is solid blue with a number. */
+.ios-selection{position:absolute;top:9px;right:10px;width:39px;height:39px;border:2.3px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px #0009;background:#1112;color:#fff}
+.ios-selection.active{border:2px solid #fff;background:#178df6;box-shadow:0 1px 4px #0007}
+.ios-selection.active span{font-size:23px;line-height:32px;font-weight:650;color:#fff;text-shadow:0 1px 1px #0002}
+.gallery-caption-glass{position:absolute;left:14px;right:14px;bottom:50px;height:77px;border-radius:36px;z-index:12;display:flex;align-items:center;gap:7px;padding:8px 10px 8px 21px;background:rgba(245,245,247,.63);backdrop-filter:blur(22px) saturate(1.4);-webkit-backdrop-filter:blur(22px) saturate(1.4);box-shadow:0 5px 17px #0002;border:1px solid #fff9}
+.gallery-caption-placeholder{font-size:24px;flex:1;color:#858588;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.2px}
+.gallery-emoji{display:flex;align-items:center;justify-content:center;color:#848788;width:35px;height:35px}.gallery-emoji svg{width:31px;height:31px}
+.gallery-blue-send{display:flex;align-items:center;justify-content:center;background:#108dff;color:#fff;width:59px;height:59px;border-radius:50%;box-shadow:0 2px 5px #1b4d7640;border:2px solid #fff}
+.gallery-blue-send svg{width:39px;height:39px}
+.gallery-sheet:after{content:"";position:absolute;left:210px;bottom:9px;height:5px;width:150px;border-radius:8px;background:#212126;opacity:.82;z-index:13}
+
+.viewer-layer{position:absolute;inset:0;z-index:18;pointer-events:none}
+.viewer-black{position:absolute;inset:0;background:#000}
+.viewer-image{position:absolute;overflow:hidden;background:#000;z-index:2}
+.viewer-image img{width:100%;height:100%;object-fit:contain}
+.viewer-chrome-transparent{position:absolute;inset:0;z-index:3;pointer-events:none}
+.viewer-chrome-transparent img{display:block}
+.profile-layer{position:absolute;inset:0;z-index:25;overflow:hidden;background:#010019;box-shadow:-6px 0 20px #0004}.profile-inner{position:absolute;inset:0;transform-origin:48% 78%}.profile-username-patch{position:absolute;top:965px;left:45px;width:340px;height:35px;background:#202022;color:#4c9def;font-size:22px;line-height:34px}.profile-name-patch{position:absolute;top:702px;left:22px;background:#020016;color:#fff;padding:0 20px 0 0;font-size:33px}.profile-description-patch{position:absolute;top:1060px;left:45px;width:482px;background:#202022;color:#fff;font-size:24px}
+.start-layer{position:absolute;inset:0;z-index:9;background:#acdaae}
+
+.gallery-photos-window::-webkit-scrollbar{display:none}
+
+/* v7: the unselected native picker toolbar fades into a caption/send bar only after a tile is selected. */
+.gallery-tools-glass{position:absolute;left:18px;right:18px;bottom:50px;height:82px;border-radius:45px;z-index:12;display:flex;align-items:center;justify-content:space-around;padding:6px;border:1px solid rgba(255,255,255,.69);background:rgba(246,246,249,.78);backdrop-filter:blur(22px) saturate(1.2);-webkit-backdrop-filter:blur(22px) saturate(1.2);box-shadow:0 5px 18px #0002}
+.gallery-tool{flex:1;min-width:0;height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:13px;color:#333;white-space:nowrap;border-radius:32px}
+.gallery-tool svg{width:29px;height:29px}
+.gallery-tool.active{background:rgba(255,255,255,.87);color:#1288ff;font-weight:600}
+.gallery-caption-glass{transition:none}
+.viewer-black{opacity:0}
+.viewer-image{will-change:left,top,width,height}
+
+/* v7 final: live camera tile is one column wide and two photo rows tall,
+   exactly like the iOS gallery reference. The next photos flow to its right. */
+.gallery-photos-grid{grid-auto-flow:row;grid-auto-rows:190px}
+.gallery-camera{grid-row:span 2;grid-column:1;background:#000;position:relative}
+.gallery-camera-icon{position:absolute;top:9px;right:9px;width:40px;height:40px;filter:drop-shadow(0 1px 2px #0007)}
+
+/* === v8: optical calibration using native Telegram screenshot as reference === */
+/* Header controls are isolated from the screenshot wallpaper; backdrop shows real chat. */
+.chat-viewport{top:66px;height:1089px;}
+.chat-header-glass{
+ position:absolute;inset:0 0 auto 0;height:169px;z-index:6;pointer-events:none;
+ background:linear-gradient(to bottom,rgba(235,247,218,.36) 0%,rgba(229,245,220,.30) 65%,rgba(231,247,228,.07) 100%);
+ backdrop-filter:blur(21px) saturate(1.2);
+ -webkit-backdrop-filter:blur(21px) saturate(1.2);
+ mask-image:linear-gradient(to bottom,#000 0%,#000 82%,transparent 100%);
+ -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 82%,transparent 100%);
+}
+.chat-header-controls{position:absolute;top:0;left:0;width:591px;height:169px;z-index:7;pointer-events:none;filter:drop-shadow(0 2px 5px rgba(36,79,38,.09))}
+.chat-footer-glass{
+ position:absolute;bottom:0;left:0;width:591px;height:143px;z-index:6;pointer-events:none;
+ background:linear-gradient(to top,rgba(217,241,202,.46),rgba(218,243,214,.20) 65%,transparent);
+ backdrop-filter:blur(12px) saturate(1.25);
+ -webkit-backdrop-filter:blur(12px) saturate(1.25);
+ mask-image:linear-gradient(to top,#000 0%,#000 73%,transparent 100%);
+ -webkit-mask-image:linear-gradient(to top,#000 0%,#000 73%,transparent 100%);
+}
+.chat-footer-controls{position:absolute;bottom:0;left:0;width:591px;height:124px;z-index:7;pointer-events:none;filter:drop-shadow(0 2px 6px rgba(0,0,0,.09))}
+/* Original Telegram containers have subtly tapered tail shapes; not rectangular cards. */
+.chat-stream{padding-left:13px;padding-right:13px;}
+.bubble{
+ max-width:498px;
+ border-radius:19px 19px 19px 9px;
+ padding:10px 17px 28px 16px;
+ background:#fff;
+ box-shadow:0 1px 1px rgba(27,75,49,.09);
+ isolation:isolate;
+}
+.bubble.wide{width:min(498px,100%)}
+.bubble:after{
+ content:"";position:absolute;left:-7px;bottom:-1px;width:21px;height:19px;
+ background:#fff;
+ clip-path:path('M 21 0 C 16 6 15 11 0 18 C 11 19 18 17 21 15 Z');
+ z-index:-1;
+}
+.bubble.outgoing{background:#d8f5cd;border-radius:19px 19px 9px 19px}
+.bubble.outgoing:after{left:auto;right:-7px;transform:scaleX(-1);background:#d8f5cd}
+.bubble-copy{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Arial,sans-serif;font-size:26px;line-height:1.30;letter-spacing:-.34px;overflow-wrap:break-word;}
+.stamp{right:12px;bottom:5px;font-size:15px}
+.photo-message{
+ width:var(--photo-width,400px);
+ max-width:calc(591px - 38px);
+ height:auto;
+ max-height:var(--photo-max-height,535px);
+ border-radius:20px 20px 8px 20px;
+ overflow:hidden;
+ background:#91a097;
+ display:block;
+ position:relative;
+}
+.photo-fit{width:100%;height:auto;max-height:var(--photo-max-height,535px);object-fit:cover;display:block}
+/* Keep the original viewer, gallery, and profile logic intact from v7. */
+
+/* v8.1: draw native controls separately, rather than pasting flattened screenshot fragments. */
+.chat-native-header{position:absolute;left:0;top:0;width:591px;height:169px;z-index:7;pointer-events:none;}
+.chat-header-left,.chat-header-title,.chat-header-avatar{
+ position:absolute;top:85px;height:69px;border-radius:39px;
+ background:rgba(242,255,239,.63);
+ border:1px solid rgba(255,255,255,.50);
+ box-shadow:0 2px 9px rgba(42,90,50,.09);
+ backdrop-filter:blur(14px) saturate(1.15);-webkit-backdrop-filter:blur(14px) saturate(1.15);
+}
+.chat-header-left{left:24px;width:124px;display:flex;align-items:center;justify-content:center;gap:2px;}
+.nav-chevron{width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#161c1a;}
+.nav-chevron svg{width:31px;height:31px}
+.nav-count{background:#050708;color:white;border-radius:18px;padding:4px 9px 4px 8px;line-height:25px;font-size:22px;font-weight:500;letter-spacing:-.5px;}
+.chat-header-title{left:188px;width:273px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;}
+.chat-header-title strong{font-size:27px;line-height:30px;letter-spacing:-.65px;font-weight:680}
+.chat-header-title small{font-size:17px;line-height:23px;color:#727d74;font-weight:400}
+.chat-header-avatar{left:498px;width:69px;border-radius:50%;padding:4px;background:rgba(243,255,244,.80);}
+.avatar-photo{height:100%;width:100%;object-fit:cover;border-radius:50%;background:#04102e}
+.chat-footer-ui{position:absolute;left:0;bottom:0;width:591px;height:124px;z-index:7;pointer-events:none;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif}
+.footer-menu,.footer-clip,.footer-field,.footer-mic{position:absolute;top:19px;height:67px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.60);box-shadow:0 1px 4px rgba(30,70,35,.14);backdrop-filter:blur(16px) saturate(1.15);-webkit-backdrop-filter:blur(16px) saturate(1.15);}
+.footer-menu{left:39px;width:140px;border-radius:37px;color:white;background:linear-gradient(120deg,#0780f4,#11a8fa);font-size:23px;font-weight:570;gap:8px;border:4px solid rgba(255,255,255,.85);box-shadow:0 1px 7px #366f4b30}
+.hamburger{font-size:25px;font-weight:300;line-height:1;transform:translateY(-1px)}
+.footer-clip{left:185px;width:64px;border-radius:50%;background:rgba(243,255,240,.70)}
+.footer-clip svg{width:34px;height:34px}
+.footer-field{left:255px;width:232px;border-radius:37px;background:rgba(244,255,240,.62);justify-content:space-between;padding:0 16px;font-size:22px;color:#89978b;white-space:nowrap;}
+.footer-field .sticker-icon{width:34px;height:34px;color:#7a867b;display:flex;align-items:center}
+.footer-field svg{width:32px;height:32px}
+.footer-mic{left:490px;width:65px;border-radius:50%;background:rgba(246,255,243,.75)}
+.footer-mic svg{width:32px;height:32px}
+
+/* v9 social-fill: 591 logical pixels occupy all 1080 output pixels.
+   Height is 1920 / (1080/591) = 1050.667 logical pixels.
+   No top status bar; header and footer remain visible. */
+.iphone-screen.social-fill {height:1050.666667px;width:591px;}
+.social-fill .wallpaper {height:1050.666667px;object-fit:cover;}
+.social-fill .chat-viewport {top:0;height:calc(100% - 105px);}
+.social-fill .chat-header-glass {height:124px;}
+.social-fill .chat-native-header {top:-64px;}
+.social-fill .chat-footer-glass {height:126px;}
+.social-fill .chat-footer-ui {bottom:0;}
+.social-fill .chat-stream {padding-bottom:9px;}
+.social-fill .gallery-sheet {height:855px;}
+.social-fill .gallery-photos-window {height:755px;}
+.social-fill .gallery-overlay-dim {inset:0;}
+.social-fill .gallery-sheet:after {display:none;}
+.social-fill .viewer-black {background:#000;}
+.social-fill .viewer-chrome-transparent {display:none;}
+.social-fill .viewer-image {z-index:3;}
+.social-fill .viewer-social-header {
+ position:absolute;top:0;left:0;right:0;height:112px;color:white;z-index:5;
+ display:flex;align-items:center;justify-content:space-between;padding:18px 24px 0;
+ background:linear-gradient(to bottom,rgba(0,0,0,.76),rgba(0,0,0,.28),transparent);
+}
+.social-fill .viewer-circle-btn {
+ width:58px;height:58px;border-radius:29px;display:flex;align-items:center;justify-content:center;
+ color:#fff;background:rgba(28,28,30,.56);border:1px solid rgba(255,255,255,.14);
+ box-shadow:0 4px 18px rgba(0,0,0,.18);
+ backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+ flex:0 0 auto;
+}
+.social-fill .viewer-circle-btn svg {width:28px;height:28px;display:block;}
+.social-fill .viewer-social-back svg {width:26px;height:26px;transform:translateX(-1px);}
+.social-fill .viewer-social-more svg {width:24px;height:24px;}
+.social-fill .viewer-social-title {
+ min-width:264px;max-width:360px;padding:11px 24px 13px;border-radius:24px;
+ text-align:center;background:rgba(28,28,30,.56);border:1px solid rgba(255,255,255,.12);
+ box-shadow:0 4px 18px rgba(0,0,0,.16);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+.social-fill .viewer-social-title strong {display:block;font-size:24px;font-weight:600;line-height:28px;letter-spacing:.2px;}
+.social-fill .viewer-social-title small {display:block;font-size:16px;color:#b5b5ba;font-weight:400;line-height:18px;}
+.social-fill .viewer-social-footer {
+ position:absolute;bottom:0;left:0;right:0;height:118px;z-index:5;color:#fff;
+ display:flex;align-items:flex-end;justify-content:space-around;padding:0 62px 28px;
+ background:linear-gradient(to top,rgba(0,0,0,.82),rgba(0,0,0,.32),transparent);
+}
+.social-fill .viewer-footer-btn {
+ width:58px;height:58px;border-radius:29px;display:flex;align-items:center;justify-content:center;
+ color:#fff;background:rgba(28,28,30,.44);border:1px solid rgba(255,255,255,.12);
+ box-shadow:0 4px 16px rgba(0,0,0,.16);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+.social-fill .viewer-footer-btn svg {width:28px;height:28px;display:block;}
+.social-fill .profile-inner {transform-origin:50% 45%;}
+.social-fill .profile-social-back {position:absolute;left:24px;top:20px;width:65px;height:65px;
+ display:flex;align-items:center;justify-content:center;color:white;font-size:52px;
+ border-radius:50%;border:1px solid #ffffff70;background:#ffffff22;z-index:3;}
+.social-fill .profile-layer {background:#040016;}
+.social-fill .start-layer {display:none;}
+
+/* v9.2: reference-based controls from actual Telegram iOS screenshot.
+   Only the viewer and attachment icon are affected. */
+.social-fill .viewer-social-header {
+ padding:18px 14px 0;
+}
+.social-fill .viewer-reference-btn {
+ box-shadow:none;border:0;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;
+ width:76px;height:76px;flex:0 0 76px;border-radius:0;
+ display:flex;align-items:center;justify-content:center;
+}
+.social-fill .viewer-reference-btn img.viewer-native-button {
+ width:76px;height:76px;object-fit:contain;display:block;
+}
+.social-fill .viewer-social-footer {
+ padding:0 6px 16px;justify-content:space-between;
+}
+.footer-clip svg{width:38px;height:38px;overflow:visible;stroke-linecap:round;stroke-linejoin:round}

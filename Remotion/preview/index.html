@@ -1,0 +1,10 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vibe Copy v9</title><link rel="stylesheet" href="/src/telegram.css"><style>body{background:#202529;color:#eee;font-family:system-ui;margin:0;display:flex;align-items:center;flex-direction:column;gap:15px;padding:18px}#controls{position:sticky;top:0;z-index:100;background:#171e24;border-radius:12px;display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px;width:min(800px,95vw)}#frame{flex:1;min-width:200px}#screen{width:591px;height:1050.667px;transform:scale(.66);transform-origin:top left;margin-right:-201px;margin-bottom:-357px;box-shadow:0 8px 28px #0009}button{border-radius:9px;padding:9px 13px;background:#333f4d;color:#fff;border:0}</style></head><body>
+<div id="controls"><button id="play">▶ Пуск</button><input id="frame" type="range" min="0" value="0" step="1"><span id="label">0.0 с</span></div><div id="screen"></div>
+<script type="module">
+import {renderScene} from '/src/scene.mjs';import {createTimeline} from '/src/timeline.mjs';import {videoConfig} from '/src/case.generated.mjs';
+const t=createTimeline(videoConfig),slider=document.getElementById('frame'),screen=document.getElementById('screen'),label=document.getElementById('label'),play=document.getElementById('play');slider.max=t.end-1;
+function draw(){const f=+slider.value;screen.innerHTML=renderScene(f,videoConfig);label.textContent=`${(f/t.fps).toFixed(1)} / ${(t.end/t.fps).toFixed(1)} с · кадр ${f}`;}
+slider.addEventListener('input',draw);draw();let playing=false,clock;
+play.onclick=()=>{playing=!playing;play.textContent=playing?'⏸ Пауза':'▶ Пуск';if(playing){clock=setInterval(()=>{slider.value=+slider.value>=t.end-1?0:+slider.value+1;draw()},1000/t.fps);}else clearInterval(clock)};
+
+</script></body></html>

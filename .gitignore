@@ -1,0 +1,22 @@
+# Secrets and working data
+.env
+.env.*
+!.env.example
+data/
+*.sqlite3
+*.sqlite3-*
+# Generated media and caches
+out/
+node_modules/
+.cache/
+.remotion/
+__pycache__/
+.pytest_cache/
+pytest-cache-files-*/
+.venv/
+# Backup from docs installer
+installation-backups/
+.tools/
+*.egg-info/
+Remotion/cases/factory/
+Remotion/public/factory/

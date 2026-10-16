@@ -1,0 +1,186 @@
+openapi: 3.1.0
+info:
+  title: Vibe Copy Private Processing Worker API
+  version: 1.0.0
+  description: "Canonical worker API v1. Private only, authenticated. Worker owns paid image generation; Factory owns approval and video creation."
+servers:
+  - url: http://127.0.0.1:8765
+    description: Local development only; production accessible over a private VPN with authentication
+security:
+  - workerBearer: []
+paths:
+  /health:
+    get:
+      operationId: health
+      security: []
+      summary: Private deployment health, non-sensitive, private interface only
+      responses:
+        '200':
+          description: Process healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status: {type: string, const: ok}
+  /v1/capabilities:
+    get:
+      operationId: getCapabilities
+      summary: Check server contract and file limits
+      responses:
+        '200':
+          description: Capabilities
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Capabilities'}
+        '401': {$ref: '#/components/responses/Error'}
+  /v1/jobs:
+    post:
+      operationId: submitProcessing
+      summary: Durable idempotent submission of original plus reference
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [request_id, original, reference]
+              properties:
+                request_id: {type: string, format: uuid, description: Unique ID for one paid attempt}
+                photo_pair_id: {type: string, maxLength: 128}
+                original: {type: string, format: binary, description: JPEG PNG or WebP image bytes}
+                reference: {type: string, format: binary, description: JPEG PNG or WebP image bytes}
+      responses:
+        '202':
+          description: Job accepted (new or existing queued)
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/JobAccepted'}
+        '200':
+          description: Idempotent replay of existing job
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/JobAccepted'}
+        '400': {$ref: '#/components/responses/Error'}
+        '401': {$ref: '#/components/responses/Error'}
+        '409': {$ref: '#/components/responses/Error'}
+        '413': {$ref: '#/components/responses/Error'}
+        '415': {$ref: '#/components/responses/Error'}
+        '429': {$ref: '#/components/responses/Error'}
+        '503': {$ref: '#/components/responses/Error'}
+  /v1/jobs/{request_id}:
+    get:
+      operationId: getProcessingStatus
+      summary: Read job state; does not start another generation
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        '200':
+          description: Job state
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/JobStatus'}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+  /v1/jobs/{request_id}/result:
+    get:
+      operationId: getProcessingResult
+      summary: Download completed generated image (never starts a generation)
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        '200':
+          description: Generated image bytes
+          headers:
+            X-Content-SHA256:
+              description: SHA256 of returned image content
+              schema: {type: string}
+          content:
+            image/png:
+              schema: {type: string, format: binary}
+            image/jpeg:
+              schema: {type: string, format: binary}
+            image/webp:
+              schema: {type: string, format: binary}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '409': {$ref: '#/components/responses/Error'}
+components:
+  securitySchemes:
+    workerBearer: {type: http, scheme: bearer, bearerFormat: opaque}
+  parameters:
+    RequestId:
+      name: request_id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+  schemas:
+    JobState:
+      type: string
+      enum: [QUEUED, PROCESSING, COMPLETED, FAILED, RECONCILIATION_REQUIRED]
+    JobAccepted:
+      type: object
+      required: [contract_version, request_id, status]
+      properties:
+        contract_version: {type: string, const: '1.0'}
+        request_id: {type: string, format: uuid}
+        status: {$ref: '#/components/schemas/JobState'}
+        pipeline_version: {type: [string, 'null']}
+    Cost:
+      type: object
+      required: [currency, amount, cost_status]
+      properties:
+        currency: {type: string, example: RUB}
+        amount: {type: [number, 'null'], minimum: 0, description: "Null if truly unknown; do not substitute 0"}
+        cost_status: {type: string, enum: [actual, estimated, unknown]}
+    JobStatus:
+      type: object
+      required: [contract_version, request_id, status, result_ready]
+      properties:
+        contract_version: {type: string, const: '1.0'}
+        request_id: {type: string, format: uuid}
+        status: {$ref: '#/components/schemas/JobState'}
+        pipeline_version: {type: [string, 'null']}
+        result_ready: {type: boolean}
+        cost: {$ref: '#/components/schemas/Cost'}
+        stages:
+          type: array
+          items:
+            type: object
+            required: [stage, status]
+            properties:
+              stage: {type: string}
+              status: {type: string}
+    Capabilities:
+      type: object
+      required: [contract_versions, supported_mime_types, max_file_bytes, worker_queue_concurrency]
+      properties:
+        contract_versions:
+          type: array
+          items: {type: string}
+          example: ['1.0']
+        pipeline_version: {type: [string, 'null']}
+        supported_mime_types:
+          type: array
+          items: {type: string}
+          example: [image/jpeg, image/png, image/webp]
+        max_file_bytes: {type: integer, minimum: 1, example: 15728640}
+        worker_queue_concurrency: {type: integer, minimum: 1, example: 1}
+    ErrorEnvelope:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: {type: string, enum: [INVALID_INPUT, UNAUTHORIZED, NOT_FOUND, IDEMPOTENCY_CONFLICT, INCOMPATIBLE_VERSION, INVALID_STATE, RATE_LIMIT, PROVIDER_FAILURE, VALIDATION_FAILURE, RECONCILIATION_REQUIRED, INTERNAL_ERROR]}
+            message: {type: string}
+            request_id: {type: [string, 'null'], format: uuid}
+  responses:
+    Error:
+      description: Structured error, never expose internal credentials or stack traces
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/ErrorEnvelope'}

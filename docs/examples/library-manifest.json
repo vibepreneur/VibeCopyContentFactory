@@ -1,0 +1,19 @@
+{
+  "pairs": [
+    {
+      "id": "my-pair-001",
+      "original": "../../data/import/original-001.jpg",
+      "reference": "../../data/import/reference-001.jpg",
+      "rights_status": "unknown",
+      "tags": ["portrait"]
+    }
+  ],
+  "avatars": [
+    {
+      "path": "../../data/import/avatar-001.mp4",
+      "approved": true,
+      "rights_status": "unknown"
+    }
+  ],
+  "hooks": []
+}

@@ -1,0 +1,27 @@
+{
+  "name": "vibe-copy-telegram-v9",
+  "version": "9.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare:case": "node tools/prepare-case.mjs",
+    "dev": "node tools/prepare-case.mjs && remotion studio src/index.ts",
+    "render": "node tools/render-case.mjs",
+    "render:social": "node tools/render-case.mjs",
+    "preview:frames": "node tools/prepare-case.mjs && node tools/preview-server.mjs",
+    "check:syntax": "node --check src/scene.mjs && node --check src/timeline.mjs && node --check src/case.generated.mjs",
+    "render:native": "node tools/render-case.mjs --native",
+    "check:v9": "node tools/check.mjs && node tools/check-v9.mjs"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.534",
+    "remotion": "4.0.534",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.20",
+    "@types/react-dom": "18.3.7",
+    "typescript": "5.9.3"
+  }
+}
