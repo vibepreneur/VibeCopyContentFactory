@@ -1,5 +1,11 @@
 # CHANGELOG — Content Factory
 
+## 2026-10-16 — private GitHub repository
+- Initialized this project as a standalone Git repository on `main`; created and pushed to the private repository [vibepreneur/VibeCopyContentFactory](https://github.com/vibepreneur/VibeCopyContentFactory).
+- Initial commit `46a6f7e` contains 102 files: Factory/Remotion source, documentation, tests, dependency lockfiles and existing Remotion sample assets. Working databases/libraries, rendered MP4s, secrets, installed dependencies and portable tools remain local.
+- Added `pytest-cache-files-*/` to `.gitignore`; pre-upload audit found no unexpected paths or secret-pattern findings after reviewing the two synthetic Telegram test-token occurrences. Worker contract SHA-256 remains unchanged.
+- `git fsck --full` passed. Authenticated GitHub API verification confirmed private visibility, `main` at the uploaded commit and 102 files. Application code and Remotion visuals were not changed; functional tests were not rerun for this repository setup.
+
 ## 2026-10-16 — v0.1.0 local MOCK MVP verified
 - Added Python Factory package, CLI/configuration, SQLite/WAL migrations and persistent queue, immutable SHA-256 library, expense summaries and review transitions.
 - Added frozen-contract HTTP client and durable fake Worker; no AI pipeline code copied. Snapshot SHA-256 unchanged.

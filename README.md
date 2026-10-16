@@ -1,5 +1,9 @@
 # Vibe Copy Content Factory — MVP
 
+Private GitHub repository: [vibepreneur/VibeCopyContentFactory](https://github.com/vibepreneur/VibeCopyContentFactory), default branch `main`.
+
+Git tracks Factory/Remotion source, documentation, dependency lockfiles and the existing Remotion sample assets. Local libraries/databases, generated videos, secrets, installed dependencies and portable tools are excluded; back up working materials separately.
+
 ## Local MOCK implementation
 
 Python Factory, SQLite/WAL queue, Modes A/B, frozen-contract fake HTTP Worker/client, private Telegram adapter and real Remotion/FFmpeg integration are implemented. Real paid Worker/Kling integration is pending; no production deployment or publishing.

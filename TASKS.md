@@ -105,3 +105,13 @@ From this project root, `.venv/Scripts/python.exe -X utf8 -m factory demo` start
 - Paid tests require explicit owner approval and finite budgets. Commercial rights on demo materials are not established; imports are marked test-only. Human creative review remains pending.
 - Public bot regression suite NOT RUN because TonePaste is outside the authorized workspace. No live secrets, public bot, payments, production DB, deploy or publishing touched.
 - NEXT_STEP for REAL: configure secrets locally (never in chat), agree Kling API and staged test budget, then implement/verify the live adapter and private Worker/Telegram integration. MOCK delivery has no outstanding blocker.
+
+## 2026-10-16 — GitHub repository setup
+
+- [x] Created private repository [vibepreneur/VibeCopyContentFactory](https://github.com/vibepreneur/VibeCopyContentFactory); default branch `main`, local `origin` uses HTTPS with the existing Git Credential Manager account.
+- `git init -b main` / staging → PASS. Added `pytest-cache-files-*/` ignore rule; 102 files staged, 8,759,253 uncompressed bytes; largest file 6,544,126 bytes. No working data, generated renders, local environment or dependencies staged.
+- Staged-file audit → initial secret-pattern flag in `tests/test_telegram_adapter.py`; reviewed both occurrences as synthetic alphabet tokens used only with `RecordingSession`. Final audit → PASS, no other findings; frozen Worker contract SHA-256 unchanged.
+- Initial sandbox credential read and `.git` metadata writes → permission denied. Scoped escalated retries → PASS; credentials never printed or committed. GitHub CLI is not installed; repository creation/verification used authenticated GitHub REST with existing credential-helper authorization.
+- `git commit -m "Initial commit: local MOCK content factory"` → PASS, `46a6f7e6aa3f3bb34f0f4701bd1df3f8f93628d7`.
+- `git push -u origin main` → PASS; remote tracking established. GitHub API GET repository/commit/tree → PASS: private=true, matching commit SHA, 102 files, tree not truncated, no excluded working paths.
+- `git fsck --full` → PASS; `git status --short --branch` → `## main...origin/main` with no pending changes before this documentation update. No application source change, new render, functional test run or deployment was needed for repository setup.
